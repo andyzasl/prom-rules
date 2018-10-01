@@ -7,7 +7,7 @@ groups:
           samples.
         summary: Prometheus isn't ingesting samples
       expr: |
-        rate(prometheus_tsdb_head_samples_appended_total{job="prometheus-k8s"}[5m]) <= 0
+        rate(prometheus_tsdb_head_samples_appended_total{app="prometheus"}[5m]) <= 0
       for: 10m
       labels:
         severity: warning
