@@ -18,7 +18,7 @@ groups:
         severity: critical
       annotations:
         description: The configuration file for {{$labels.job}} at {{$labels.instance}}
-          is invalid and was therefore not reloaded.
+          is invalid and was therefore not reloaded. Monitor={{$labels.monitor}}
         runbook: troubleshooting/prometheus-invalid-config.md
         title: '{{$labels.job}} has an invalid config'
     - alert: PrometheusNotConnectedToAlertmanagers
