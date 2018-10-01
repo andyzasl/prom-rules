@@ -1,18 +1,6 @@
 groups:
 - name: Prometheus
   rules:
-  - alert: PrometheusInvalidConfigFile
-    expr: prometheus_config_last_reload_successful{job=~"prometheus.*", fqdn !~ ".*gprd.*"} == 0
-    for: 30m
-    labels:
-      pager: pagerduty
-      service: prometheus
-      severity: critical
-    annotations:
-      description: The configuration file for {{$labels.job}} at {{$labels.instance}}
-        is invalid and was therefore not reloaded.
-      runbook: troubleshooting/prometheus-invalid-config.md
-      title: '{{$labels.job}} has an invalid config'
   - alert: GaleraChangedClusterSize
     expr: changes(mysql_global_status_wsrep_cluster_size[15m]) > 0
     labels:
