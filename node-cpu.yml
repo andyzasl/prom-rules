@@ -8,5 +8,5 @@ groups:
       severity: warning
     annotations:
       title: High CPU usage detected
-      description: CPU usage is above 75% (current value is: {{ $value }})
+      description: CPU usage is above 75% (current value is {{ $value }})
 
