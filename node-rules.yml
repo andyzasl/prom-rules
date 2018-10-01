@@ -1,0 +1,21 @@
+groups:
+- name: Node.Rules
+  rules:
+  - alert: NodeCPUUsage
+    expr: (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
+    for: 1m
+    labels: 
+      severity: warning
+    annotations:
+      title: High CPU usage detected
+      description: CPU usage is above 75% (current value is {{ $value }})
+  - alert: NodeDiskRunningFull
+      annotations:
+        message: Device {{ $labels.device }} of node-exporter {{ $labels.namespace
+          }}/{{ $labels.pod }} will be full within the next 24 hours.
+      expr: |
+        (node:node_filesystem_usage: > 0.85) and (predict_linear(node:node_filesystem_avail:[6h], 3600 * 24) < 0)
+      for: 30m
+      labels:
+        severity: warning
+
