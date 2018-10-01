@@ -1,0 +1,88 @@
+groups:
+- name: Prometheus
+  rules:
+  - alert: PrometheusInvalidConfigFile
+    expr: prometheus_config_last_reload_successful{job=~"prometheus.*", fqdn !~ ".*gprd.*"} == 0
+    for: 30m
+    labels:
+      pager: pagerduty
+      service: prometheus
+      severity: critical
+    annotations:
+      description: The configuration file for {{$labels.job}} at {{$labels.instance}}
+        is invalid and was therefore not reloaded.
+      runbook: troubleshooting/prometheus-invalid-config.md
+      title: '{{$labels.job}} has an invalid config'
+  - alert: GaleraChangedClusterSize
+    expr: changes(mysql_global_status_wsrep_cluster_size[15m]) > 0
+    labels:
+      severity: critical
+    annotations:
+      title: WSREP Cluster changed it size
+      description: WSREP Cluster changed it size at {stack}, instance {{$labels.instance}} 
+  - alert: LowReplicas
+    expr: kube_deployment_spec_replicas > kube_deployment_status_replicas_available
+    for: 5m 
+    labels:
+        severity: critical
+    annotations:
+        title: Not enough replicas for deployment
+  - alert: AlertmanagerDownOrMissing
+    expr: label_replace(prometheus_operator_alertmanager_spec_replicas, "job", "alertmanager-$1",
+      "alertmanager", "(.*)") / ON(job) GROUP_RIGHT() sum(up) BY (job) != 1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      description: An unexpected number of Alertmanagers are scraped or Alertmanagers
+        disappeared from discovery.
+  - alert: ContainerMemoryUsage
+    expr: container_spec_memory_limit_bytes/container_memory_rss>50
+    labels:
+        severity: warning
+    annotations:
+        description: Container {{ $labels.instance }} memory usage is over 50%. {{value}}
+  - alert: K8SNodeNotReady
+    expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+    for: 1h
+    labels:
+      severity: warning
+    annotations:
+      description: The Kubelet on  has not checked in with the API,
+        or has set itself to NotReady, for more than an hour
+      summary: Node status is NotReady
+  - alert: K8SManyNodesNotReady
+    expr: count(kube_node_status_condition{condition="Ready",status="true"} == 0)
+      > 1 and (count(kube_node_status_condition{condition="Ready",status="true"} ==
+      0) / count(kube_node_status_condition{condition="Ready",status="true"})) > 0.2
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      description: '% of Kubernetes nodes are not ready'
+  - alert: K8SKubeletDown
+    expr: count(up{job="kubelet"} == 0) / count(up{job="kubelet"}) * 100 > 3
+    for: 1h
+    labels:
+      severity: warning
+    annotations:
+      description: Prometheus failed to scrape % of kubelets.
+  - alert: K8SKubeletDown
+    expr: (absent(up{job="kubelet"} == 1) or count(up{job="kubelet"} == 0) / count(up{job="kubelet"}))
+      * 100 > 1
+    for: 1h
+    labels:
+      severity: critical
+    annotations:
+      description: Prometheus failed to scrape % of kubelets, or all Kubelets
+        have disappeared from service discovery.
+      summary: Many Kubelets cannot be scraped
+  - alert: K8SKubeletTooManyPods
+    expr: kubelet_running_pod_count > 100
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      description: Kubelet  is running  pods, close
+        to the limit of 110
+      summary: Kubelet is close to pod limit
