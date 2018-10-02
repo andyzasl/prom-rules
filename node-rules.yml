@@ -11,8 +11,8 @@ groups:
       description: CPU usage is above 75% (current value is {{ $value }})
   - alert: NodeDiskRunningFull
     annotations:
-      message: Device {{ $labels.device }} of node-exporter {{ $labels.namespace }}/{{ $labels.pod }} Mountpoint {{ $labels.mountpoint }}
-    expr: node_filesystem_free_bytes/node_filesystem_size_bytes*100 > 70
+      message: Device {{ $labels.device }} Mountpoint {{ $labels.mountpoint }} have low free space - {{ value }}
+    expr: node_filesystem_free_bytes/node_filesystem_size_bytes*100 < 30
     for: 30m
     labels:
       severity: warning

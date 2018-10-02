@@ -52,3 +52,15 @@ groups:
       histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job="apiserver"}[5m]))) < 604800
     labels:
       severity: warning
+  - alert: KubeNotEnoughScheduledDaemonset
+    annotations:
+        description: Can't schdule daemonset 
+    expr: (kube_daemonset_status_current_number_scheduled - kube_daemonset_status_desired_number_scheduled) > 0
+    labels:
+        severity: warning
+  - alert: KubeNotEnoughScheduledStatefulSet
+    annotations: 
+      description: Can't schedule Statefulset
+    expr: (kube_statefulset_status_replicas-kube_statefulset_status_replicas_ready)>0
+    labels:
+        severity: critical
