@@ -44,7 +44,7 @@ groups:
         severity: warning
   - alert: K8NotEnoughScheduledStatefulSet
     annotations: 
-      description: Can't schedule Statefulset {{$labels.statefulset}}. Need to spawn {{ $value }} more.
+      description: Can't schedule Statefulset {{$labels.statefulset}}. Need to spawn {{ $value }} more. {{ $labels }}
     expr: (kube_statefulset_status_replicas-kube_statefulset_status_replicas_ready)>0
     for: 1m
     labels:
