@@ -1,0 +1,10 @@
+groups:
+- name: CronJob
+  rules:
+  - alert: CronJobNextScheduleInPast
+    expr: kube_cronjob_status_last_schedule_time-time()<0 
+    labels:
+        severity: warning
+    annotations:
+        description: Next schedule of cronjob {{$labels.cronjob}} is in the past {{$value}}
+
