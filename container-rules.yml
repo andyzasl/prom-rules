@@ -2,11 +2,11 @@ groups:
 - name: Containers
   rules:
   - alert: ContainerMemoryUsage
-    expr: container_spec_memory_limit_bytes/container_memory_rss>50
+    expr: container_spec_memory_limit_bytes/container_memory_rss>75
     labels:
         severity: warning
     annotations:
-        description: Container {{ $labels.container_name }} @ {{$labels.kubernetes_io_hostname}}  memory usage is over 50%. {{$value}}
+        description: Container {{ $labels.container_name }} @ {{$labels.kubernetes_io_hostname}}  memory usage is over 75%. {{$value}}
   - alert: ContainerMemoryLimitsNotSet
     expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!="",container_name!=""} == 0
     labels:
