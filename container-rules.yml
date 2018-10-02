@@ -8,7 +8,7 @@ groups:
     annotations:
         description: Container {{ $labels.instance }} memory usage is over 50%. {{$value}}
   - alert: ContainerMemoryLimitIsNotSet
-    expr: container_spec_memory_limit_bytes{container_name="POD"}==0
+    expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!=""} == 0
     labels:
         severity: information
     annotations:
