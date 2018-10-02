@@ -13,4 +13,10 @@ groups:
         severity: information
     annotations:
         description: Memory limit is not set
+  - alert: ContainerRestartTooOfthen
+    expr: rate(kube_pod_container_status_restarts_total[1h])>0
+    labels:
+        severity: warning
+    annotations: 
+        description: There is restarts of container for an hour
 
