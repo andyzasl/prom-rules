@@ -45,22 +45,24 @@ groups:
       description: Kubelet  is running  pods, close
         to the limit of 110
       summary: Kubelet is close to pod limit
-  - alert: KubeClientCertificateExpiration
+  - alert: K8ClientCertificateExpiration
     annotations:
       message: Kubernetes API certificate is expiring in less than 7 days
     expr: |
       histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job="apiserver"}[5m]))) < 604800
     labels:
       severity: warning
-  - alert: KubeNotEnoughScheduledDaemonset
+  - alert: K8NotEnoughScheduledDaemonset
     annotations:
         description: Can't schdule daemonset 
     expr: (kube_daemonset_status_current_number_scheduled - kube_daemonset_status_desired_number_scheduled) > 0
+    for: 1m
     labels:
         severity: warning
-  - alert: KubeNotEnoughScheduledStatefulSet
+  - alert: K8NotEnoughScheduledStatefulSet
     annotations: 
       description: Can't schedule Statefulset
     expr: (kube_statefulset_status_replicas-kube_statefulset_status_replicas_ready)>0
+    for: 1m
     labels:
         severity: critical
