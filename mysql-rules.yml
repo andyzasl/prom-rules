@@ -7,4 +7,4 @@ groups:
       severity: critical
     annotations:
       title: WSREP Cluster changed it size
-      description: WSREP Cluster changed it size at {stack}, instance {{$labels.instance}}
+      description: WSREP Cluster changed it size at {{$labels.monitor}}. Now it is {{$value}}
