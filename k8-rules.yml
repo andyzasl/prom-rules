@@ -37,14 +37,14 @@ groups:
       severity: warning
   - alert: K8NotEnoughScheduledDaemonset
     annotations:
-        description: Can't schdule daemonset {{$labels.daemonset}} 
+        description: Can't schdule daemonset {{$labels.daemonset}}. Current value is {{value}} of {{value}}
     expr: (kube_daemonset_status_current_number_scheduled - kube_daemonset_status_desired_number_scheduled) > 0
     for: 1m
     labels:
         severity: warning
   - alert: K8NotEnoughScheduledStatefulSet
     annotations: 
-      description: Can't schedule Statefulset {{$labels.statefulset}}
+      description: Can't schedule Statefulset {{$labels.statefulset}}. Current value is {{value}} of {{value}}
     expr: (kube_statefulset_status_replicas-kube_statefulset_status_replicas_ready)>0
     for: 1m
     labels:
