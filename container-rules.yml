@@ -6,7 +6,7 @@ groups:
     labels:
         severity: warning
     annotations:
-        description: Container {{ $labels.instance }} memory usage is over 50%. {{$value}}
+        description: Container {{ $labels.container_name }} @ {{$labels.kubernetes_io_hostname}}  memory usage is over 50%. {{$value}}
   - alert: ContainerMemoryLimitIsNotSet
     expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!=""} == 0
     labels:
