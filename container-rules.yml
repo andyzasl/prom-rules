@@ -7,7 +7,7 @@ groups:
         severity: warning
     annotations:
         description: Container {{ $labels.instance }} memory usage is over 50%. {{$value}}
-  - alert: ContainerMemoryLimitIsNotSet
+  - alert: ContainerMemoryLimitIsNotSet{container_name="POD"}
     expr: container_spec_memory_limit_bytes==0
     labels:
         severity: information
