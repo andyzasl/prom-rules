@@ -49,7 +49,7 @@ groups:
     for: 1m
     labels:
         severity: critical
- - alert: K8NotEnoughScheduledDeployment
+  - alert: K8NotEnoughScheduledDeployment
     annotations:
         description: Can't schedule deployment {{$labels.deployment}}
     expr: kube_deployment_spec_replicas > kube_deployment_status_replicas_available
