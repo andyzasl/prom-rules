@@ -11,6 +11,6 @@ groups:
     expr: container_spec_memory_limit_bytes==0
     labels:
         severity: information
-    annotation:
+    annotations:
         description: Memory limit is not set
 
