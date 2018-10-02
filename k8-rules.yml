@@ -37,7 +37,7 @@ groups:
       severity: warning
   - alert: K8NotEnoughScheduledDaemonset
     annotations:
-        description: Can't schdule daemonset {{$labels.daemonset}}. Need to spawn {{ $value }} more.
+        description: Can't schedule daemonset {{$labels.daemonset}}
     expr: (kube_daemonset_status_current_number_scheduled - kube_daemonset_status_desired_number_scheduled) < 0
     for: 1m
     labels:
