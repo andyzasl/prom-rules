@@ -1,0 +1,9 @@
+groups:
+- name: Containers
+  rules:
+  - alert: ContainerMemoryUsage
+    expr: container_spec_memory_limit_bytes/container_memory_rss>50
+    labels:
+        severity: warning
+    annotations:
+        description: Container {{ $labels.instance }} memory usage is over 50%. {{$value}}

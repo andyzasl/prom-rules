@@ -1,0 +1,10 @@
+groups:
+- name: MySQL
+  rules:
+  - alert: GaleraChangedClusterSize
+    expr: changes(mysql_global_status_wsrep_cluster_size[15m]) > 0
+    labels:
+      severity: critical
+    annotations:
+      title: WSREP Cluster changed it size
+      description: WSREP Cluster changed it size at {stack}, instance {{$labels.instance}}
