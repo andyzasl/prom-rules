@@ -2,7 +2,7 @@ groups:
 - name: Containers
   rules:
   - alert: ContainerMemoryUsage
-    expr: container_memory_rss/container_spec_memory_limit_bytes>75
+    expr: container_memory_rss{image!~".*pause.*",pod_name!="",container_name!=""} / container_spec_memory_limit_bytes > 75 < 200000
     labels:
         severity: warning
     annotations:
