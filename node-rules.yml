@@ -2,7 +2,7 @@ groups:
 - name: Node.Rules
   rules:
   - alert: NodeCPUUsage
-    expr: (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
+    expr: (100 - (avg by (instance) (irate(node_cpu_seconds_total{app="node-exporter",mode="idle"}[5m])) * 100)) > 75
     for: 1m
     labels: 
       severity: warning
