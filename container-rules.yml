@@ -12,7 +12,7 @@ groups:
     labels:
         severity: information
     annotations:
-        description: Memory limit is not set
+        description: Memory limit is not set for {{$labels.pod_name}}
   - alert: ContainerRestartTooOfthen
     expr: rate(kube_pod_container_status_restarts_total[1h])>0
     labels:
