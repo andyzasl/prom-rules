@@ -7,12 +7,18 @@ groups:
         severity: warning
     annotations:
         description: Container {{ $labels.container_name }} ({{$labels.pod_name}}) @ {{$labels.kubernetes_io_hostname}}  memory usage is over 75%. {{$value}}
-  - alert: ContainerMemoryLimitsNotSet
-    expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!="",container_name!=""} == 0
+  - alert: ContainerMemoryLimitsNotSetDefault
+    expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!="",container_name!="", namespace="default"} == 0
     labels:
         severity: information
     annotations:
         description: Memory limit is not set for {{$labels.pod_name}}
+  - alert: ContainerMemoryLimitsNotSetMonitoring
+    expr: container_spec_memory_limit_bytes{image!~"k8s.gcr.io/pause.*",pod_name!="",container_name!="", namespace="monitoring"} == 0
+    labels:
+        severity: information
+    annotations:
+        description: Memory limit is not set for {{$labels.pod_name}}        
   - alert: ContainerRestartTooOfthen
     expr: rate(kube_pod_container_status_restarts_total[1h])>0
     labels:
