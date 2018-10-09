@@ -9,8 +9,8 @@ groups:
       title: Pod is not in state Running or Succeded
       description: Pod in different state
   - alert: RestartAlerts
-    expr: count(kube_pod_container_status_restarts_total) by (pod_name) > 5
+    expr: count(kube_pod_container_status_restarts_total) by (container) > 3
     for: 30m
     annotations:
-      summary: "More than 5 restarts in pod {{ $labels.pod_name }} for 30m"
-      description: "{{ $labels.container_name }} restarted (current value: {{ $value }}s) times in pod {{ $labels.namespace }}/{{ $labels.pod_name }}"
+      summary: "More than 3 restarts in pod {{ $labels.container }} for 30m"
+      description: "{{ $labels.container }} restarted (current value: {{ $value }}s) times in pod {{ $labels.namespace }}/{{ $labels.pod }}"
