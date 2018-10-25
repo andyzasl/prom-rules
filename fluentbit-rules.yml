@@ -1,0 +1,9 @@
+groups:
+- name: FluentBit
+  rules:
+  - alert: FluentBitErrors
+    expr: fluentbit_output_errors_total > 0
+    labels:
+      severity: critical
+    annotations:
+      title: There is error in FluentBit
