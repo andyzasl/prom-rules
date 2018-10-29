@@ -16,11 +16,11 @@ groups:
     for: 30m
     labels:
       severity: warning
-  - alert: NodeTCPRetransmitNonZero
-    expr: rate(node_netstat_Tcp_RetransSegs[1h])>0
-    for: 1h
-    labels: 
-      severity: warning
-    annotations:
-      title: There is TCP Retransmit events on node
-      description: This could be a flannel issue
+      #  - alert: NodeTCPRetransmitNonZero
+      #expr: rate(node_netstat_Tcp_RetransSegs[1h])>0
+      #for: 1h
+      #labels: 
+      #severity: warning
+      #annotations:
+      #title: There is TCP Retransmit events on node
+      #description: This could be a flannel issue
