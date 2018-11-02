@@ -2,7 +2,7 @@ groups:
 - name: Endpoints
   rules:
   - alert: EndpointNoAddressAvailable
-    expr: kube_endpoint_address_available = 0
+    expr: kube_endpoint_address_available == 0
     labels:
       severity: critical
     annotations:
