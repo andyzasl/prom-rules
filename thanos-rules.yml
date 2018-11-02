@@ -25,4 +25,10 @@ groups:
       impact: Prometheus queries are failing
       action: Check {{ $labels.kubernetes_pod_name }} pod logs in {{ $labels.kubernetes_namespace}} namespace
       dashboard: SIDECAR_URL
+  - alert: ThanosStoreNodesConnectionsChanged
+    expr: changes(thanos_store_nodes_grpc_connections) > 0
+    for: 1h
+    annotations:
+        summary: Unstable work thanos
+
 
