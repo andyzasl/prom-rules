@@ -1,10 +1,10 @@
-groups:
-- name: Endpoints
-  rules:
-  - alert: EndpointNoAddressAvailable
-    expr: kube_endpoint_address_available == 0
-    labels:
-      severity: critical
-    annotations:
-      title: Endpoint exists, but no actual app serves via it
-      description: At {{$labels.monitor}}
+#groups:
+#- name: Endpoints
+#  rules:
+#  - alert: EndpointNoAddressAvailable
+#    expr: kube_endpoint_address_available == 0
+#    labels:
+#      severity: critical
+#    annotations:
+#      title: Endpoint exists, but no actual app serves via it
+#      description: At {{$labels.monitor}}
