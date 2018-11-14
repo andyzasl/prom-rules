@@ -16,6 +16,16 @@ groups:
     for: 30m
     labels:
       severity: warning
+  - alert: NodeRestarted
+    expr: node_time - node_boot_time < 300
+    for: 5m
+    labels: 
+      severity: warning
+    annotations:  
+      summary: NODE RESTARTED WARNING: NODE '{{ $labels.host }}'
+      description:  Warning: Node '{{ $labels.host }}' was restarted at {{ $value }} seconds ago
+                          
+
       #  - alert: NodeTCPRetransmitNonZero
       #expr: rate(node_netstat_Tcp_RetransSegs[1h])>0
       #for: 1h

@@ -2,7 +2,7 @@ groups:
 - name: Thanos
   rules:
   - alert: ThanosSidecarPrometheusDown
-    expr: thanos_sidecar_prometheus_up{name="prometheus"} == 0
+    expr: thanos_sidecar_prometheus_up == 0
     for: 5m
     annotations:
       summary: Thanos Sidecar cannot connect to Prometheus
@@ -10,7 +10,7 @@ groups:
       action: Check {{ $labels.kubernetes_pod_name }} pod logs in {{ $labels.kubernetes_namespace}} namespace
       dashboard: SIDECAR_URL
   - alert: ThanosSidecarBucketOperationsFailed
-    expr: rate(thanos_objstore_bucket_operation_failures_total{name="prometheus"}[5m]) > 0
+    expr: rate(thanos_objstore_bucket_operation_failures_total[5m]) > 0
     for: 5m
     annotations:
       summary: Thanos Sidecar bucket operations are failing
@@ -18,7 +18,7 @@ groups:
       action: Check {{ $labels.kubernetes_pod_name }} pod logs in {{ $labels.kubernetes_namespace}} namespace
       dashboard: SIDECAR_URL
   - alert: ThanosSidecarGrpcErrorRate
-    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable",name="prometheus"}[5m]) > 0
+    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable"}[5m]) > 0
     for: 5m
     annotations:
       summary: Thanos Sidecar is returning Internal/Unavailable errors 
