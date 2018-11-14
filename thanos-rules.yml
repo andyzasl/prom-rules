@@ -17,13 +17,6 @@ groups:
       impact: We will lose metrics data if not fixed in 24h
       action: Check {{ $labels.kubernetes_pod_name }} pod logs in {{ $labels.kubernetes_namespace}} namespace
       dashboard: SIDECAR_URL
-  - alert: ThanosSidecarGrpcErrorRate
-    expr: rate(grpc_server_handled_total{grpc_code=~"Unknown|ResourceExhausted|Internal|Unavailable"}[5m]) > 0
-    for: 5m
-    annotations:
-      summary: Thanos Sidecar is returning Internal/Unavailable errors 
-      action: Check {{ $labels.kubernetes_pod_name }} pod logs in {{ $labels.kubernetes_namespace}} namespace
-      dashboard: SIDECAR_URL
   - alert: ThanosStoreNodesConnectionsChanged
     expr: changes(thanos_store_nodes_grpc_connections[30m]) > 0
     for: 1h
