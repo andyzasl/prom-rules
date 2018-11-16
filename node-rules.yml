@@ -22,8 +22,8 @@ groups:
     labels: 
       severity: warning
     annotations:  
-      summary: NODE RESTARTED WARNING: NODE '{{ $labels.host }}'
-      description:  Warning: Node '{{ $labels.host }}' was restarted at {{ $value }} seconds ago
+      summary: NODE RESTARTED WARNING: NODE '{{ $labels.instance }}'
+      description:  Warning: Node '{{ $labels.instance }}' was restarted at {{ $value }} seconds ago
                           
 
       #  - alert: NodeTCPRetransmitNonZero
