@@ -17,7 +17,7 @@ groups:
     labels:
       severity: warning
   - alert: NodeRestarted
-    expr: node_time - node_boot_time < 300
+    expr: node_time_seconds - node_boot_time_seconds < 300
     for: 5m
     labels: 
       severity: warning
