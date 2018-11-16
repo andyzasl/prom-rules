@@ -22,15 +22,4 @@ groups:
     labels: 
       severity: warning
     annotations:  
-      summary: NODE RESTARTED WARNING: NODE '{{ $labels.instance }}'
       description:  Warning: Node '{{ $labels.instance }}' was restarted at {{ $value }} seconds ago
-                          
-
-      #  - alert: NodeTCPRetransmitNonZero
-      #expr: rate(node_netstat_Tcp_RetransSegs[1h])>0
-      #for: 1h
-      #labels: 
-      #severity: warning
-      #annotations:
-      #title: There is TCP Retransmit events on node
-      #description: This could be a flannel issue
