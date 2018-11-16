@@ -9,10 +9,3 @@ groups:
     annotations:
       title: High CPU usage detected
       description: CPU idle is under 30% for 5m (current value is {{ $value }})
-  - alert: NodeRestarted
-    expr: node_time_seconds - node_boot_time_seconds < 300
-    for: 5m
-    labels: 
-      severity: warning
-    annotations:  
-      description:  Warning: Node '{{ $labels.instance }}' was restarted at {{ $value }} seconds ago
