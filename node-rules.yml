@@ -16,4 +16,10 @@ groups:
       severity: critical
     annotations: 
       description: MemoryPressure detected. Kubernetes node may be overloaded.
-
+  - alert: NodeUnschedulable
+	expr: kube_node_spec_unschedulable > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      description: MemoryPressure detected. Kubernetes node may be overloaded.
