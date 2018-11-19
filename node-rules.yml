@@ -9,3 +9,11 @@ groups:
     annotations:
       title: High CPU usage detected
       description: CPU idle is under 30% for 5m (current value is {{ $value }})
+  - alert: NodeMemoryPressure
+    expr: kube_node_status_condition{condition="MemoryPressure",status="false"}!=1 
+    for: 5m
+    labels:
+      severity: critical
+    annotations: 
+      description: MemoryPressure detected. Kubernetes node may be overloaded.
+
